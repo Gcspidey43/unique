@@ -1,0 +1,54 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  // For local development: file:/home/z/my-project/db/custom.db
+  // For production (Cloudflare Pages): Use PostgreSQL (Supabase, Neon, etc.)
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Lead {
+  id                   String   @id @default(cuid())
+  fullName             String
+  phoneNumber          String
+  email                String
+  interestedVisaType   String
+  preferredCountry     String
+  message              String?
+  status               String   @default("new")
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+}
+
+model ConsultationBooking {
+  id                    String   @id @default(cuid())
+  fullName              String
+  phoneNumber           String
+  email                 String
+  consultationType       String
+  preferredDate         String
+  preferredTime         String
+  status                String   @default("pending")
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+}
+
+model ContactMessage {
+  id         String   @id @default(cuid())
+  fullName   String
+  email      String
+  phoneNumber String?
+  subject    String?
+  message    String
+  status     String   @default("new")
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
